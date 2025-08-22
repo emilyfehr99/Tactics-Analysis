@@ -13,8 +13,9 @@ from pathlib import Path
 import logging
 from datetime import datetime
 
-from formation_detector import FormationDetector, RinkZone
-from zone_analyzer import ZoneAnalyzer
+from .formation_detector import FormationDetector, RinkZone
+from .zone_analyzer import ZoneAnalyzer
+from .tactical_weakness_detector import TacticalWeaknessDetector
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -53,6 +54,7 @@ class TacticalAnalyzer:
         # Initialize analysis components
         self.formation_detector = FormationDetector(rink_dimensions)
         self.zone_analyzer = ZoneAnalyzer(rink_dimensions)
+        self.weakness_detector = TacticalWeaknessDetector(rink_dimensions)
         
         # Load and process tracking data
         self.tracking_data = self._load_tracking_data()
@@ -686,6 +688,531 @@ class TacticalAnalyzer:
         
         logger.info("Complete tactical analysis finished and saved")
         return complete_analysis
+    
+    def run_enhanced_analysis_with_weaknesses(
+        self, 
+        min_frames: int = 5, 
+        min_confidence: float = 0.6
+    ) -> Dict[str, Any]:
+        """
+        Run enhanced tactical analysis with detailed weakness detection.
+        
+        This method provides in-depth analysis of formation quality, including:
+        - Coverage gaps and positioning issues
+        - Formation breakdowns and consistency problems
+        - Behavioral patterns that create vulnerabilities
+        - Specific tactical recommendations for improvement
+        
+        Args:
+            min_frames: Minimum consecutive frames to confirm formation
+            min_confidence: Minimum confidence threshold for formation detection
+            
+        Returns:
+            Enhanced analysis results with weakness detection
+        """
+        logger.info("Starting enhanced tactical analysis with weakness detection...")
+        
+        # Run basic formation detection
+        formation_analysis = self.formation_detector.detect_formations_over_time(
+            self.tracking_data, min_frames
+        )
+        
+        logger.info(f"Detected {len(formation_analysis)} formations for enhanced analysis")
+        
+        if not formation_analysis:
+            logger.warning("No formations detected for enhanced analysis")
+            # Return basic structure with no formations
+            return {
+                "enhanced_formation_analysis": {
+                    "detected_formations": [],
+                    "total_weaknesses": 0,
+                    "weakness_summary": {"message": "No formations detected"},
+                    "quality_distribution": {"message": "No formations for quality analysis"}
+                },
+                "zone_analysis": self._convert_zone_analysis_for_json(
+                    self.zone_analyzer.analyze_zone_distribution(self.tracking_data)
+                ),
+                "enhanced_tactical_insights": {
+                    "weakness_analysis": {
+                        "total_weaknesses": 0,
+                        "weakness_distribution": {},
+                        "critical_issues": 0,
+                        "formation_breakdowns": 0
+                    },
+                    "formation_insights": {},
+                    "strategic_recommendations": {"overall_strategy": "No formations detected for analysis"},
+                    "quality_summary": {"message": "No formations detected"},
+                    "tactical_priorities": ["No formations detected for tactical analysis"]
+                },
+                "analysis_metadata": {
+                    "timestamp": datetime.now().isoformat(),
+                    "data_source": str(self.input_path),
+                    "total_frames": len(self.tracking_data),
+                    "analysis_version": "1.1.0",
+                    "analysis_type": "enhanced_with_weakness_detection"
+                }
+            }
+        
+        # Analyze each detected formation for quality and weaknesses
+        enhanced_formations = []
+        total_weaknesses = []
+        
+        for formation in formation_analysis:
+            formation_name = formation["formation"]
+            start_frame = formation["start_frame"]
+            end_frame = formation["end_frame"]
+            
+            # Get players from the middle frame of the formation for analysis
+            mid_frame = (start_frame + end_frame) // 2
+            if mid_frame < len(self.tracking_data) and 'players' in self.tracking_data[mid_frame]:
+                players = self.tracking_data[mid_frame]['players']
+                
+                # Analyze formation quality and detect weaknesses
+                formation_quality = self.weakness_detector.analyze_formation_quality(
+                    formation_name, players, self.tracking_data, (start_frame, end_frame)
+                )
+                
+                # Update formation data with quality analysis
+                enhanced_formation = {
+                    **formation,
+                    "quality_analysis": {
+                        "overall_score": formation_quality.overall_score,
+                        "coverage_quality": formation_quality.coverage_quality.value,
+                        "weaknesses": [
+                            {
+                                "type": w.weakness_type.value,
+                                "severity": w.severity,
+                                "description": w.description,
+                                "affected_players": w.affected_players,
+                                "zone": w.zone,
+                                "recommendations": w.recommendations,
+                                "metrics": w.metrics
+                            }
+                            for w in formation_quality.weaknesses
+                        ],
+                        "strengths": formation_quality.strengths,
+                        "improvement_areas": formation_quality.improvement_areas,
+                        "tactical_insights": formation_quality.tactical_insights,
+                        "improvement_priority": self._calculate_improvement_priority(formation_quality.weaknesses)
+                    }
+                }
+                
+                enhanced_formations.append(enhanced_formation)
+                # Convert weaknesses to dictionaries for consistency
+                total_weaknesses.extend([
+                    {
+                        "type": w.weakness_type.value,
+                        "severity": w.severity,
+                        "description": w.description,
+                        "affected_players": w.affected_players,
+                        "zone": w.zone,
+                        "recommendations": w.recommendations,
+                        "metrics": w.metrics
+                    }
+                    for w in formation_quality.weaknesses
+                ])
+        
+        # Run zone analysis
+        zone_analysis = self.zone_analyzer.analyze_zone_distribution(self.tracking_data)
+        
+        # Convert RinkZone enums to strings for JSON serialization
+        zone_analysis = self._convert_zone_analysis_for_json(zone_analysis)
+        
+        # Generate enhanced tactical insights
+        try:
+            enhanced_insights = self._generate_enhanced_tactical_insights(
+                enhanced_formations, zone_analysis, total_weaknesses
+            )
+        except Exception as e:
+            logger.error(f"Error generating enhanced tactical insights: {e}")
+            import traceback
+            traceback.print_exc()
+            # Return basic structure on error
+            enhanced_insights = {
+                "weakness_analysis": {
+                    "total_weaknesses": len(total_weaknesses),
+                    "weakness_distribution": {},
+                    "critical_issues": 0,
+                    "formation_breakdowns": 0
+                },
+                "formation_insights": {},
+                "strategic_recommendations": {"overall_strategy": "Error in analysis"},
+                "quality_summary": {"message": "Error in analysis"},
+                "tactical_priorities": ["Error in analysis"]
+            }
+        
+        # Compile enhanced results
+        enhanced_analysis = {
+            "enhanced_formation_analysis": {
+                "detected_formations": enhanced_formations,
+                "total_weaknesses": len(total_weaknesses),
+                "weakness_summary": self._summarize_weaknesses(total_weaknesses),
+                "quality_distribution": self._analyze_quality_distribution(enhanced_formations)
+            },
+            "zone_analysis": zone_analysis,
+            "enhanced_tactical_insights": enhanced_insights,
+            "analysis_metadata": {
+                "timestamp": datetime.now().isoformat(),
+                "data_source": str(self.input_path),
+                "total_frames": len(self.tracking_data),
+                "analysis_version": "1.1.0",
+                "analysis_type": "enhanced_with_weakness_detection"
+            }
+        }
+        
+        # Save enhanced results
+        self._save_enhanced_analysis_results(enhanced_analysis)
+        
+        logger.info("Enhanced tactical analysis with weakness detection completed")
+        return enhanced_analysis
+    
+    def _generate_enhanced_tactical_insights(
+        self, 
+        enhanced_formations: List[Dict], 
+        zone_analysis: Dict, 
+        total_weaknesses: List
+    ) -> Dict[str, Any]:
+        """Generate enhanced tactical insights with weakness analysis."""
+        
+        # Analyze weakness patterns
+        weakness_patterns = self._analyze_weakness_patterns(total_weaknesses)
+        
+        # Generate formation-specific insights
+        formation_insights = {}
+        for formation in enhanced_formations:
+            formation_name = formation["formation"]
+            quality = formation["quality_analysis"]
+            
+            # Debug logging
+            logger.debug(f"Processing formation {formation_name} with {len(quality['weaknesses'])} weaknesses")
+            logger.debug(f"Quality keys: {list(quality.keys())}")
+            logger.debug(f"Formation keys: {list(formation.keys())}")
+            
+            try:
+                improvement_priority = self._calculate_improvement_priority(quality["weaknesses"])
+            except Exception as e:
+                logger.warning(f"Error calculating improvement priority for {formation_name}: {e}")
+                improvement_priority = "unknown"
+            
+            formation_insights[formation_name] = {
+                "quality_score": quality["overall_score"],
+                "coverage_quality": quality["coverage_quality"],
+                "key_weaknesses": [w["description"] for w in quality["weaknesses"][:3]],  # Top 3
+                "key_strengths": quality["strengths"][:3],  # Top 3
+                "critical_issues": [w for w in quality["weaknesses"] if w["severity"] > 0.7],
+                "improvement_priority": improvement_priority
+            }
+        
+        # Generate strategic recommendations
+        strategic_recommendations = self._generate_strategic_recommendations(
+            enhanced_formations, weakness_patterns
+        )
+        
+        return {
+            "weakness_analysis": {
+                "total_weaknesses": len(total_weaknesses),
+                "weakness_distribution": weakness_patterns,
+                "critical_issues": len([w for w in total_weaknesses if w["severity"] > 0.7]),
+                "formation_breakdowns": len([w for w in total_weaknesses if w["type"] == "formation_breakdown"])
+            },
+            "formation_insights": formation_insights,
+            "strategic_recommendations": strategic_recommendations,
+            "quality_summary": self._generate_quality_summary(enhanced_formations),
+            "tactical_priorities": self._identify_tactical_priorities(total_weaknesses)
+        }
+    
+    def _analyze_weakness_patterns(self, weaknesses: List) -> Dict[str, Any]:
+        """Analyze patterns in detected weaknesses."""
+        patterns = {
+            "by_type": {},
+            "by_severity": {"low": 0, "medium": 0, "high": 0, "critical": 0},
+            "by_zone": {},
+            "most_common": []
+        }
+        
+        for weakness in weaknesses:
+            # Count by type
+            w_type = weakness["type"]
+            patterns["by_type"][w_type] = patterns["by_type"].get(w_type, 0) + 1
+            
+            # Count by severity
+            if weakness["severity"] <= 0.3:
+                patterns["by_severity"]["low"] += 1
+            elif weakness["severity"] <= 0.6:
+                patterns["by_severity"]["medium"] += 1
+            elif weakness["severity"] <= 0.8:
+                patterns["by_severity"]["high"] += 1
+            else:
+                patterns["by_severity"]["critical"] += 1
+            
+            # Count by zone
+            zone = weakness["zone"]
+            patterns["by_zone"][zone] = patterns["by_zone"].get(zone, 0) + 1
+        
+        # Find most common weaknesses
+        weakness_counts = {}
+        for weakness in weaknesses:
+            desc = weakness["description"]
+            weakness_counts[desc] = weakness_counts.get(desc, 0) + 1
+        
+        patterns["most_common"] = sorted(
+            weakness_counts.items(), key=lambda x: x[1], reverse=True
+        )[:5]
+        
+        return patterns
+    
+    def _calculate_improvement_priority(self, weaknesses: List) -> str:
+        """Calculate improvement priority based on weaknesses."""
+        if not weaknesses:
+            return "maintain"
+        
+        try:
+            # Handle both TacticalWeakness objects and dictionaries
+            if hasattr(weaknesses[0], 'severity'):
+                # TacticalWeakness objects
+                critical_count = len([w for w in weaknesses if w.severity > 0.7])
+                high_count = len([w for w in weaknesses if w.severity > 0.5])
+            else:
+                # Dictionaries
+                critical_count = len([w for w in weaknesses if w["severity"] > 0.7])
+                high_count = len([w for w in weaknesses if w["severity"] > 0.5])
+            
+            if critical_count > 0:
+                return "critical"
+            elif high_count > 2:
+                return "high"
+            elif high_count > 0:
+                return "medium"
+            else:
+                return "low"
+        except Exception as e:
+            logger.warning(f"Error calculating improvement priority: {e}")
+            return "unknown"
+    
+    def _generate_strategic_recommendations(
+        self, 
+        enhanced_formations: List[Dict], 
+        weakness_patterns: Dict
+    ) -> Dict[str, str]:
+        """Generate strategic recommendations based on weakness analysis."""
+        recommendations = {}
+        
+        # Formation-specific recommendations
+        for formation in enhanced_formations:
+            formation_name = formation["formation"]
+            quality = formation["quality_analysis"]
+            
+            if quality["overall_score"] < 0.6:
+                recommendations[f"{formation_name}_priority"] = "Immediate attention required"
+            elif quality["overall_score"] < 0.8:
+                recommendations[f"{formation_name}_focus"] = "Focus on key weaknesses"
+            else:
+                recommendations[f"{formation_name}_maintenance"] = "Maintain current standards"
+        
+        # Overall strategic recommendations
+        if weakness_patterns["by_severity"]["critical"] > 0:
+            recommendations["overall_strategy"] = "Critical issues require immediate tactical adjustments"
+        elif weakness_patterns["by_severity"]["high"] > 3:
+            recommendations["overall_strategy"] = "Multiple high-priority issues suggest need for systematic improvement"
+        elif weakness_patterns["by_severity"]["high"] > 0:
+            recommendations["overall_strategy"] = "Address high-priority weaknesses to improve overall performance"
+        else:
+            recommendations["overall_strategy"] = "Focus on fine-tuning and maintaining current tactical standards"
+        
+        return recommendations
+    
+    def _generate_quality_summary(self, enhanced_formations: List[Dict]) -> Dict[str, Any]:
+        """Generate summary of formation quality across all formations."""
+        if not enhanced_formations:
+            return {"message": "No formations detected for quality analysis"}
+        
+        quality_scores = [f["quality_analysis"]["overall_score"] for f in enhanced_formations]
+        coverage_qualities = [f["quality_analysis"]["coverage_quality"] for f in enhanced_formations]
+        
+        return {
+            "average_quality_score": np.mean(quality_scores),
+            "quality_range": (min(quality_scores), max(quality_scores)),
+            "excellent_formations": len([q for q in quality_scores if q >= 0.9]),
+            "good_formations": len([q for q in quality_scores if q >= 0.8]),
+            "fair_formations": len([q for q in quality_scores if q >= 0.6]),
+            "poor_formations": len([q for q in quality_scores if q < 0.6]),
+            "coverage_quality_distribution": {
+                quality: coverage_qualities.count(quality) 
+                for quality in set(coverage_qualities)
+            }
+        }
+    
+    def _identify_tactical_priorities(self, weaknesses: List) -> List[str]:
+        """Identify tactical priorities based on weakness analysis."""
+        priorities = []
+        
+        # Critical weaknesses
+        critical_weaknesses = [w for w in weaknesses if w["severity"] > 0.8]
+        if critical_weaknesses:
+            priorities.append("Address critical tactical vulnerabilities immediately")
+        
+        # Coverage gaps
+        coverage_gaps = [w for w in weaknesses if w["type"] == "coverage_gap"]
+        if coverage_gaps:
+            priorities.append("Improve gap control and defensive coverage")
+        
+        # Formation breakdowns
+        breakdowns = [w for w in weaknesses if w["type"] == "formation_breakdown"]
+        if breakdowns:
+            priorities.append("Increase formation discipline and consistency")
+        
+        # Positioning issues
+        positioning = [w for w in weaknesses if w["type"] == "poor_positioning"]
+        if positioning:
+            priorities.append("Work on fundamental positioning skills")
+        
+        return priorities
+    
+    def _summarize_weaknesses(self, weaknesses: List) -> Dict[str, Any]:
+        """Summarize detected weaknesses."""
+        if not weaknesses:
+            return {"message": "No tactical weaknesses detected"}
+        
+        return {
+            "total_count": len(weaknesses),
+            "by_severity": {
+                "critical": len([w for w in weaknesses if w["severity"] > 0.8]),
+                "high": len([w for w in weaknesses if w["severity"] > 0.6]),
+                "medium": len([w for w in weaknesses if w["severity"] > 0.3]),
+                "low": len([w for w in weaknesses if w["severity"] <= 0.3])
+            },
+            "by_type": {
+                w["type"]: len([w2 for w2 in weaknesses if w2["type"] == w["type"]])
+                for w in weaknesses
+            }
+        }
+    
+    def _analyze_quality_distribution(self, enhanced_formations: List[Dict]) -> Dict[str, Any]:
+        """Analyze distribution of formation quality scores."""
+        if not enhanced_formations:
+            return {"message": "No formations for quality analysis"}
+        
+        quality_scores = [f["quality_analysis"]["overall_score"] for f in enhanced_formations]
+        
+        return {
+            "mean": np.mean(quality_scores),
+            "median": np.median(quality_scores),
+            "std": np.std(quality_scores),
+            "quartiles": np.percentile(quality_scores, [25, 50, 75]).tolist(),
+            "distribution": {
+                "excellent": len([q for q in quality_scores if q >= 0.9]),
+                "good": len([q for q in quality_scores if q >= 0.8]),
+                "fair": len([q for q in quality_scores if q >= 0.6]),
+                "poor": len([q for q in quality_scores if q < 0.6])
+            }
+        }
+    
+    def _save_enhanced_analysis_results(self, results: Dict[str, Any]) -> None:
+        """Save enhanced analysis results to output directory."""
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        
+        # Save enhanced JSON results
+        json_path = self.output_dir / f"enhanced_tactical_analysis_{timestamp}.json"
+        with open(json_path, 'w') as f:
+            json.dump(results, f, indent=2, default=str)
+        
+        # Save enhanced CSV summary
+        csv_path = self.output_dir / f"enhanced_tactical_summary_{timestamp}.csv"
+        self._save_enhanced_csv_summary(results, csv_path)
+        
+        # Save enhanced text report
+        report_path = self.output_dir / f"enhanced_tactical_report_{timestamp}.txt"
+        self._save_enhanced_text_report(results, report_path)
+        
+        logger.info(f"Enhanced analysis results saved to {self.output_dir}")
+    
+    def _convert_zone_analysis_for_json(self, zone_analysis: Dict) -> Dict:
+        """Convert RinkZone enums to strings for JSON serialization."""
+        converted = {}
+        
+        for zone, metrics in zone_analysis.items():
+            if hasattr(zone, 'value'):
+                zone_key = zone.value
+            else:
+                zone_key = str(zone)
+            
+            converted[zone_key] = {
+                'avg_players': metrics.avg_players,
+                'max_players': metrics.max_players,
+                'min_players': metrics.min_players,
+                'player_density': metrics.player_density,
+                'formation_consistency': metrics.formation_consistency,
+                'transition_frequency': metrics.transition_frequency
+            }
+        
+        return converted
+    
+    def _save_enhanced_csv_summary(self, results: Dict[str, Any], csv_path: Path) -> None:
+        """Save enhanced analysis summary as CSV."""
+        summary_data = []
+        
+        # Enhanced formation summary with quality metrics
+        if results["enhanced_formation_analysis"]["detected_formations"]:
+            for formation in results["enhanced_formation_analysis"]["detected_formations"]:
+                quality = formation["quality_analysis"]
+                summary_data.append({
+                    "formation_name": formation["formation"],
+                    "start_time": formation["start_time"],
+                    "end_time": formation["end_time"],
+                    "duration_frames": formation["duration_frames"],
+                    "confidence": formation["avg_confidence"],
+                    "quality_score": quality["overall_score"],
+                    "coverage_quality": quality["coverage_quality"],
+                    "weakness_count": len(quality["weaknesses"]),
+                    "critical_weaknesses": len([w for w in quality["weaknesses"] if w["severity"] > 0.7]),
+                    "improvement_priority": quality["improvement_priority"]
+                })
+        
+        if summary_data:
+            df = pd.DataFrame(summary_data)
+            df.to_csv(csv_path, index=False)
+    
+    def _save_enhanced_text_report(self, results: Dict[str, Any], report_path: Path) -> None:
+        """Save enhanced analysis as text report."""
+        with open(report_path, 'w') as f:
+            f.write("ENHANCED HOCKEY TACTICAL ANALYSIS REPORT\n")
+            f.write("=" * 60 + "\n\n")
+            
+            f.write(f"Analysis Date: {results['analysis_metadata']['timestamp']}\n")
+            f.write(f"Data Source: {results['analysis_metadata']['data_source']}\n")
+            f.write(f"Total Frames Analyzed: {results['analysis_metadata']['total_frames']}\n")
+            f.write(f"Analysis Type: {results['analysis_metadata']['analysis_type']}\n\n")
+            
+            # Write weakness analysis summary
+            weakness_summary = results["enhanced_tactical_insights"]["weakness_analysis"]
+            f.write("TACTICAL WEAKNESS ANALYSIS\n")
+            f.write("-" * 40 + "\n")
+            f.write(f"Total Weaknesses Detected: {weakness_summary['total_weaknesses']}\n")
+            f.write(f"Critical Issues: {weakness_summary['critical_issues']}\n")
+            f.write(f"Formation Breakdowns: {weakness_summary['formation_breakdowns']}\n\n")
+            
+            # Write quality summary
+            quality_summary = results["enhanced_tactical_insights"]["quality_summary"]
+            f.write("FORMATION QUALITY SUMMARY\n")
+            f.write("-" * 30 + "\n")
+            
+            if "message" in quality_summary:
+                f.write(f"{quality_summary['message']}\n\n")
+            else:
+                f.write(f"Average Quality Score: {quality_summary['average_quality_score']:.3f}\n")
+                f.write(f"Excellent Formations: {quality_summary['excellent_formations']}\n")
+                f.write(f"Good Formations: {quality_summary['good_formations']}\n")
+                f.write(f"Fair Formations: {quality_summary['fair_formations']}\n")
+                f.write(f"Poor Formations: {quality_summary['poor_formations']}\n\n")
+            
+            # Write tactical priorities
+            f.write("TACTICAL PRIORITIES\n")
+            f.write("-" * 25 + "\n")
+            for priority in results["enhanced_tactical_insights"]["tactical_priorities"]:
+                f.write(f"• {priority}\n")
+            
+            f.write("\n" + "=" * 60 + "\n")
+            f.write("End of Enhanced Report\n")
     
     def _save_analysis_results(self, results: Dict[str, Any]) -> None:
         """
