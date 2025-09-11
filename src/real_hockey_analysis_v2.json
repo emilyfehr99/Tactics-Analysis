@@ -1,0 +1,354 @@
+{
+  "metadata": {
+    "analysis_type": "REAL_HOCKEY_ANALYSIS",
+    "data_source": "Roboflow_Computer_Vision",
+    "total_frames": 100,
+    "analysis_timestamp": 0.0
+  },
+  "player_movement": {
+    "player_0": {
+      "team": "Team B (Medium)",
+      "total_distance": 185.3830958638286,
+      "average_speed": 17.34010019438011,
+      "max_speed": 67.92768709647149,
+      "speed_variance": 14.573760369786465,
+      "zone_distribution": {
+        "offensive": 1.0,
+        "neutral": 0.0,
+        "defensive": 0.0
+      },
+      "frames_tracked": 100,
+      "team_confidence_avg": 0.8088243692633948
+    },
+    "player_1": {
+      "team": "Team B (High)",
+      "total_distance": 289.19282138257114,
+      "average_speed": 27.07274249994236,
+      "max_speed": 347.9226815805132,
+      "speed_variance": 38.743320108047286,
+      "zone_distribution": {
+        "offensive": 1.0,
+        "neutral": 0.0,
+        "defensive": 0.0
+      },
+      "frames_tracked": 100,
+      "team_confidence_avg": 0.7670147593234296
+    },
+    "player_3": {
+      "team": "Team B (High)",
+      "total_distance": 296.3529048399564,
+      "average_speed": 27.736852445766637,
+      "max_speed": 269.49987380341,
+      "speed_variance": 37.83863075077736,
+      "zone_distribution": {
+        "offensive": 1.0,
+        "neutral": 0.0,
+        "defensive": 0.0
+      },
+      "frames_tracked": 100,
+      "team_confidence_avg": 0.9380458218799348
+    },
+    "player_4": {
+      "team": "Team B (High)",
+      "total_distance": 334.573565918175,
+      "average_speed": 31.29832885818922,
+      "max_speed": 304.7231725309382,
+      "speed_variance": 40.0774310536672,
+      "zone_distribution": {
+        "offensive": 1.0,
+        "neutral": 0.0,
+        "defensive": 0.0
+      },
+      "frames_tracked": 100,
+      "team_confidence_avg": 0.8724254625606944
+    },
+    "player_5": {
+      "team": "Team B (High)",
+      "total_distance": 406.15505942036975,
+      "average_speed": 38.73282058170264,
+      "max_speed": 496.3619716741777,
+      "speed_variance": 56.654816654999756,
+      "zone_distribution": {
+        "offensive": 1.0,
+        "neutral": 0.0,
+        "defensive": 0.0
+      },
+      "frames_tracked": 98,
+      "team_confidence_avg": 0.8510691026060954
+    },
+    "player_6": {
+      "team": "Team A (Medium)",
+      "total_distance": 11.155481709328722,
+      "average_speed": 20.791743986843787,
+      "max_speed": 34.97770128777085,
+      "speed_variance": 14.41169909251707,
+      "zone_distribution": {
+        "offensive": 1.0,
+        "neutral": 0.0,
+        "defensive": 0.0
+      },
+      "frames_tracked": 5,
+      "team_confidence_avg": 0.7268470255541539
+    },
+    "player_9": {
+      "team": "Team A (High)",
+      "total_distance": 232.60304470441673,
+      "average_speed": 26.179381406074693,
+      "max_speed": 404.8926039746782,
+      "speed_variance": 44.644936159456584,
+      "zone_distribution": {
+        "offensive": 1.0,
+        "neutral": 0.0,
+        "defensive": 0.0
+      },
+      "frames_tracked": 83,
+      "team_confidence_avg": 0.8385550631659922
+    },
+    "player_15": {
+      "team": "Team A (Medium)",
+      "total_distance": 3.819377813713103,
+      "average_speed": 11.865646207084557,
+      "max_speed": 33.18523739247669,
+      "speed_variance": 15.107344834845698,
+      "zone_distribution": {
+        "offensive": 1.0,
+        "neutral": 0.0,
+        "defensive": 0.0
+      },
+      "frames_tracked": 3,
+      "team_confidence_avg": 0.6361065491004986
+    },
+    "player_17": {
+      "team": "Team A (Medium)",
+      "total_distance": 7.813453187306537,
+      "average_speed": 24.273265467757568,
+      "max_speed": 53.83468828247132,
+      "speed_variance": 22.293749074756935,
+      "zone_distribution": {
+        "offensive": 1.0,
+        "neutral": 0.0,
+        "defensive": 0.0
+      },
+      "frames_tracked": 3,
+      "team_confidence_avg": 0.6939538233187897
+    },
+    "player_19": {
+      "team": "Team A (Medium)",
+      "total_distance": 9.142129834286855,
+      "average_speed": 17.131394467094353,
+      "max_speed": 44.352438658466895,
+      "speed_variance": 15.106112565936684,
+      "zone_distribution": {
+        "offensive": 1.0,
+        "neutral": 0.0,
+        "defensive": 0.0
+      },
+      "frames_tracked": 5,
+      "team_confidence_avg": 0.6735848531290666
+    },
+    "player_22": {
+      "team": "Team A (Medium)",
+      "total_distance": 397.14154280525156,
+      "average_speed": 55.4552870896005,
+      "max_speed": 818.6890691393351,
+      "speed_variance": 103.73728566268323,
+      "zone_distribution": {
+        "offensive": 1.0,
+        "neutral": 0.0,
+        "defensive": 0.0
+      },
+      "frames_tracked": 67,
+      "team_confidence_avg": 0.6026701109533761
+    },
+    "player_49": {
+      "team": "Unknown",
+      "total_distance": 17.343837603963088,
+      "average_speed": 40.4595534668129,
+      "max_speed": 68.47811354340288,
+      "speed_variance": 26.133710451981262,
+      "zone_distribution": {
+        "offensive": 1.0,
+        "neutral": 0.0,
+        "defensive": 0.0
+      },
+      "frames_tracked": 4,
+      "team_confidence_avg": 0.12843118908209422
+    }
+  },
+  "puck_movement": {
+    "puck_detections": 59,
+    "stick_blade_detections": 241,
+    "total_puck_events": 300,
+    "puck_possession_rate": 0.8033333333333333,
+    "puck_average_speed": 37.50049795683013,
+    "puck_max_speed": 363.9296183119086,
+    "puck_speed_variance": 56.659854367754235,
+    "stick_blade_average_speed": 35.16283636158962,
+    "stick_blade_max_speed": 493.5708804131452,
+    "stick_blade_speed_variance": 45.834222849597786
+  },
+  "team_possession": {
+    "Team B (Medium)": {
+      "player_frequency": 0.69,
+      "average_players_per_frame": 1.5507246376811594,
+      "average_team_confidence": 0.7156244150489116,
+      "puck_proximity_rate": 0.02
+    },
+    "Team B (High)": {
+      "player_frequency": 1.0,
+      "average_players_per_frame": 3.22,
+      "average_team_confidence": 0.8600042668412877,
+      "puck_proximity_rate": 0.36
+    },
+    "Team A (Medium)": {
+      "player_frequency": 0.54,
+      "average_players_per_frame": 1.0925925925925926,
+      "average_team_confidence": 0.6938074052650671,
+      "puck_proximity_rate": 0.01
+    },
+    "Team A (High)": {
+      "player_frequency": 0.98,
+      "average_players_per_frame": 1.4081632653061225,
+      "average_team_confidence": 0.9269983426293688,
+      "puck_proximity_rate": 0.07
+    },
+    "Team A (Low)": {
+      "player_frequency": 0.08,
+      "average_players_per_frame": 1.0,
+      "average_team_confidence": 0.542029702829057,
+      "puck_proximity_rate": 0.0
+    },
+    "Team B (Low)": {
+      "player_frequency": 0.32,
+      "average_players_per_frame": 1.0,
+      "average_team_confidence": 0.5475743264048603,
+      "puck_proximity_rate": 0.04
+    },
+    "Unknown": {
+      "player_frequency": 0.03,
+      "average_players_per_frame": 1.0,
+      "average_team_confidence": 0.0,
+      "puck_proximity_rate": 0.0
+    }
+  },
+  "spatial_patterns": {
+    "player_density_by_zone": {
+      "offensive_zone": 100.0
+    },
+    "puck_location_by_zone": {
+      "offensive_zone": 100.0
+    },
+    "team_spatial_distribution": {
+      "Team B (Medium)": {
+        "offensive_zone": 107
+      },
+      "Team B (High)": {
+        "offensive_zone": 322
+      },
+      "Team A (Medium)": {
+        "offensive_zone": 59
+      },
+      "Team A (High)": {
+        "offensive_zone": 138
+      },
+      "Team A (Low)": {
+        "offensive_zone": 8
+      },
+      "Team B (Low)": {
+        "offensive_zone": 32
+      },
+      "Unknown": {
+        "offensive_zone": 3
+      }
+    }
+  },
+  "real_insights": {
+    "data_quality": {
+      "total_frames": 100,
+      "total_players_detected": 12,
+      "puck_detection_rate": 0.59,
+      "stick_blade_detection_rate": 2.41
+    },
+    "movement_analysis": {
+      "most_active_player": [
+        "player_5",
+        {
+          "team": "Team B (High)",
+          "total_distance": 406.15505942036975,
+          "average_speed": 38.73282058170264,
+          "max_speed": 496.3619716741777,
+          "speed_variance": 56.654816654999756,
+          "zone_distribution": {
+            "offensive": 1.0,
+            "neutral": 0.0,
+            "defensive": 0.0
+          },
+          "frames_tracked": 98,
+          "team_confidence_avg": 0.8510691026060954
+        }
+      ],
+      "fastest_player": [
+        "player_22",
+        {
+          "team": "Team A (Medium)",
+          "total_distance": 397.14154280525156,
+          "average_speed": 55.4552870896005,
+          "max_speed": 818.6890691393351,
+          "speed_variance": 103.73728566268323,
+          "zone_distribution": {
+            "offensive": 1.0,
+            "neutral": 0.0,
+            "defensive": 0.0
+          },
+          "frames_tracked": 67,
+          "team_confidence_avg": 0.6026701109533761
+        }
+      ],
+      "average_player_speed": 28.194759722604115
+    },
+    "puck_analysis": {
+      "puck_possession_rate": 0.8033333333333333,
+      "puck_average_speed": 37.50049795683013,
+      "stick_blade_average_speed": 35.16283636158962
+    },
+    "team_analysis": {
+      "team_with_most_players": [
+        "Team B (High)",
+        {
+          "player_frequency": 1.0,
+          "average_players_per_frame": 3.22,
+          "average_team_confidence": 0.8600042668412877,
+          "puck_proximity_rate": 0.36
+        }
+      ],
+      "team_with_highest_confidence": [
+        "Team A (High)",
+        {
+          "player_frequency": 0.98,
+          "average_players_per_frame": 1.4081632653061225,
+          "average_team_confidence": 0.9269983426293688,
+          "puck_proximity_rate": 0.07
+        }
+      ],
+      "team_with_most_puck_proximity": [
+        "Team B (High)",
+        {
+          "player_frequency": 1.0,
+          "average_players_per_frame": 3.22,
+          "average_team_confidence": 0.8600042668412877,
+          "puck_proximity_rate": 0.36
+        }
+      ]
+    },
+    "spatial_analysis": {
+      "most_crowded_zone": [
+        "offensive_zone",
+        100.0
+      ],
+      "puck_most_common_zone": [
+        "offensive_zone",
+        100.0
+      ]
+    }
+  }
+}

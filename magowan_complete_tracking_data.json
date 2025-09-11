@@ -1,0 +1,454 @@
+{
+  "frames": [
+    {
+      "frame_id": 0,
+      "frame_idx": 0,
+      "timestamp": 0.0,
+      "players": [
+        {
+          "player_id": "player_0",
+          "type": "player",
+          "rink_position": {
+            "x": 700,
+            "y": 300,
+            "pixel_x": 700,
+            "pixel_y": 300
+          },
+          "orientation": 0.0,
+          "team": "Team A",
+          "team_confidence": 0.95
+        },
+        {
+          "player_id": "player_1",
+          "type": "player",
+          "rink_position": {
+            "x": 600,
+            "y": 200,
+            "pixel_x": 600,
+            "pixel_y": 200
+          },
+          "orientation": 0.0,
+          "team": "Team A",
+          "team_confidence": 0.95
+        },
+        {
+          "player_id": "player_2",
+          "type": "player",
+          "rink_position": {
+            "x": 600,
+            "y": 400,
+            "pixel_x": 600,
+            "pixel_y": 400
+          },
+          "orientation": 0.0,
+          "team": "Team A",
+          "team_confidence": 0.95
+        },
+        {
+          "player_id": "player_3",
+          "type": "player",
+          "rink_position": {
+            "x": 500,
+            "y": 300,
+            "pixel_x": 500,
+            "pixel_y": 300
+          },
+          "orientation": 0.0,
+          "team": "Team A",
+          "team_confidence": 0.95
+        },
+        {
+          "player_id": "player_4",
+          "type": "player",
+          "rink_position": {
+            "x": 400,
+            "y": 300,
+            "pixel_x": 400,
+            "pixel_y": 300
+          },
+          "orientation": 0.0,
+          "team": "Team A",
+          "team_confidence": 0.95
+        },
+        {
+          "player_id": "player_5",
+          "type": "player",
+          "rink_position": {
+            "x": 300,
+            "y": 200,
+            "pixel_x": 300,
+            "pixel_y": 200
+          },
+          "orientation": 0.0,
+          "team": "Team B",
+          "team_confidence": 0.95
+        },
+        {
+          "player_id": "player_6",
+          "type": "player",
+          "rink_position": {
+            "x": 300,
+            "y": 400,
+            "pixel_x": 300,
+            "pixel_y": 400
+          },
+          "orientation": 0.0,
+          "team": "Team B",
+          "team_confidence": 0.95
+        },
+        {
+          "player_id": "player_7",
+          "type": "player",
+          "rink_position": {
+            "x": 200,
+            "y": 150,
+            "pixel_x": 200,
+            "pixel_y": 150
+          },
+          "orientation": 0.0,
+          "team": "Team B",
+          "team_confidence": 0.95
+        },
+        {
+          "player_id": "player_8",
+          "type": "player",
+          "rink_position": {
+            "x": 200,
+            "y": 300,
+            "pixel_x": 200,
+            "pixel_y": 300
+          },
+          "orientation": 0.0,
+          "team": "Team B",
+          "team_confidence": 0.95
+        },
+        {
+          "player_id": "player_9",
+          "type": "player",
+          "rink_position": {
+            "x": 200,
+            "y": 450,
+            "pixel_x": 200,
+            "pixel_y": 450
+          },
+          "orientation": 0.0,
+          "team": "Team B",
+          "team_confidence": 0.95
+        },
+        {
+          "player_id": "player_10",
+          "type": "player",
+          "rink_position": {
+            "x": 100,
+            "y": 300,
+            "pixel_x": 100,
+            "pixel_y": 300
+          },
+          "orientation": 0.0,
+          "team": "Team B",
+          "team_confidence": 0.95
+        }
+      ]
+    },
+    {
+      "frame_id": 1,
+      "frame_idx": 1,
+      "timestamp": 0.033,
+      "players": [
+        {
+          "player_id": "player_0",
+          "type": "player",
+          "rink_position": {
+            "x": 705,
+            "y": 305,
+            "pixel_x": 705,
+            "pixel_y": 305
+          },
+          "orientation": 0.0,
+          "team": "Team A",
+          "team_confidence": 0.95
+        },
+        {
+          "player_id": "player_1",
+          "type": "player",
+          "rink_position": {
+            "x": 605,
+            "y": 205,
+            "pixel_x": 605,
+            "pixel_y": 205
+          },
+          "orientation": 0.0,
+          "team": "Team A",
+          "team_confidence": 0.95
+        },
+        {
+          "player_id": "player_2",
+          "type": "player",
+          "rink_position": {
+            "x": 605,
+            "y": 405,
+            "pixel_x": 605,
+            "pixel_y": 405
+          },
+          "orientation": 0.0,
+          "team": "Team A",
+          "team_confidence": 0.95
+        },
+        {
+          "player_id": "player_3",
+          "type": "player",
+          "rink_position": {
+            "x": 505,
+            "y": 305,
+            "pixel_x": 505,
+            "pixel_y": 305
+          },
+          "orientation": 0.0,
+          "team": "Team A",
+          "team_confidence": 0.95
+        },
+        {
+          "player_id": "player_4",
+          "type": "player",
+          "rink_position": {
+            "x": 405,
+            "y": 305,
+            "pixel_x": 405,
+            "pixel_y": 305
+          },
+          "orientation": 0.0,
+          "team": "Team A",
+          "team_confidence": 0.95
+        },
+        {
+          "player_id": "player_5",
+          "type": "player",
+          "rink_position": {
+            "x": 295,
+            "y": 195,
+            "pixel_x": 295,
+            "pixel_y": 195
+          },
+          "orientation": 0.0,
+          "team": "Team B",
+          "team_confidence": 0.95
+        },
+        {
+          "player_id": "player_6",
+          "type": "player",
+          "rink_position": {
+            "x": 295,
+            "y": 405,
+            "pixel_x": 295,
+            "pixel_y": 405
+          },
+          "orientation": 0.0,
+          "team": "Team B",
+          "team_confidence": 0.95
+        },
+        {
+          "player_id": "player_7",
+          "type": "player",
+          "rink_position": {
+            "x": 195,
+            "y": 145,
+            "pixel_x": 195,
+            "pixel_y": 145
+          },
+          "orientation": 0.0,
+          "team": "Team B",
+          "team_confidence": 0.95
+        },
+        {
+          "player_id": "player_8",
+          "type": "player",
+          "rink_position": {
+            "x": 195,
+            "y": 295,
+            "pixel_x": 195,
+            "pixel_y": 295
+          },
+          "orientation": 0.0,
+          "team": "Team B",
+          "team_confidence": 0.95
+        },
+        {
+          "player_id": "player_9",
+          "type": "player",
+          "rink_position": {
+            "x": 195,
+            "y": 445,
+            "pixel_x": 195,
+            "pixel_y": 445
+          },
+          "orientation": 0.0,
+          "team": "Team B",
+          "team_confidence": 0.95
+        },
+        {
+          "player_id": "player_10",
+          "type": "player",
+          "rink_position": {
+            "x": 95,
+            "y": 295,
+            "pixel_x": 95,
+            "pixel_y": 295
+          },
+          "orientation": 0.0,
+          "team": "Team B",
+          "team_confidence": 0.95
+        }
+      ]
+    },
+    {
+      "frame_id": 2,
+      "frame_idx": 2,
+      "timestamp": 0.067,
+      "players": [
+        {
+          "player_id": "player_0",
+          "type": "player",
+          "rink_position": {
+            "x": 710,
+            "y": 310,
+            "pixel_x": 710,
+            "pixel_y": 310
+          },
+          "orientation": 0.0,
+          "team": "Team A",
+          "team_confidence": 0.95
+        },
+        {
+          "player_id": "player_1",
+          "type": "player",
+          "rink_position": {
+            "x": 610,
+            "y": 210,
+            "pixel_x": 610,
+            "pixel_y": 210
+          },
+          "orientation": 0.0,
+          "team": "Team A",
+          "team_confidence": 0.95
+        },
+        {
+          "player_id": "player_2",
+          "type": "player",
+          "rink_position": {
+            "x": 610,
+            "y": 410,
+            "pixel_x": 610,
+            "pixel_y": 410
+          },
+          "orientation": 0.0,
+          "team": "Team A",
+          "team_confidence": 0.95
+        },
+        {
+          "player_id": "player_3",
+          "type": "player",
+          "rink_position": {
+            "x": 510,
+            "y": 310,
+            "pixel_x": 510,
+            "pixel_y": 310
+          },
+          "orientation": 0.0,
+          "team": "Team A",
+          "team_confidence": 0.95
+        },
+        {
+          "player_id": "player_4",
+          "type": "player",
+          "rink_position": {
+            "x": 410,
+            "y": 310,
+            "pixel_x": 410,
+            "pixel_y": 310
+          },
+          "orientation": 0.0,
+          "team": "Team A",
+          "team_confidence": 0.95
+        },
+        {
+          "player_id": "player_5",
+          "type": "player",
+          "rink_position": {
+            "x": 290,
+            "y": 190,
+            "pixel_x": 290,
+            "pixel_y": 190
+          },
+          "orientation": 0.0,
+          "team": "Team B",
+          "team_confidence": 0.95
+        },
+        {
+          "player_id": "player_6",
+          "type": "player",
+          "rink_position": {
+            "x": 290,
+            "y": 410,
+            "pixel_x": 290,
+            "pixel_y": 410
+          },
+          "orientation": 0.0,
+          "team": "Team B",
+          "team_confidence": 0.95
+        },
+        {
+          "player_id": "player_7",
+          "type": "player",
+          "rink_position": {
+            "x": 190,
+            "y": 140,
+            "pixel_x": 190,
+            "pixel_y": 140
+          },
+          "orientation": 0.0,
+          "team": "Team B",
+          "team_confidence": 0.95
+        },
+        {
+          "player_id": "player_8",
+          "type": "player",
+          "rink_position": {
+            "x": 190,
+            "y": 290,
+            "pixel_x": 190,
+            "pixel_y": 290
+          },
+          "orientation": 0.0,
+          "team": "Team B",
+          "team_confidence": 0.95
+        },
+        {
+          "player_id": "player_9",
+          "type": "player",
+          "rink_position": {
+            "x": 190,
+            "y": 440,
+            "pixel_x": 190,
+            "pixel_y": 440
+          },
+          "orientation": 0.0,
+          "team": "Team B",
+          "team_confidence": 0.95
+        },
+        {
+          "player_id": "player_10",
+          "type": "player",
+          "rink_position": {
+            "x": 90,
+            "y": 290,
+            "pixel_x": 90,
+            "pixel_y": 290
+          },
+          "orientation": 0.0,
+          "team": "Team B",
+          "team_confidence": 0.95
+        }
+      ]
+    }
+  ]
+}

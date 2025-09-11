@@ -13,9 +13,9 @@ from pathlib import Path
 import logging
 from datetime import datetime
 
-from .formation_detector import FormationDetector, RinkZone
-from .zone_analyzer import ZoneAnalyzer
-from .tactical_weakness_detector import TacticalWeaknessDetector
+from formation_detector import FormationDetector, RinkZone
+from zone_analyzer import ZoneAnalyzer
+from tactical_weakness_detector import TacticalWeaknessDetector
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)

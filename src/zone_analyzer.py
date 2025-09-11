@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from enum import Enum
 import logging
 
-from .formation_detector import RinkZone
+from formation_detector import RinkZone
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
